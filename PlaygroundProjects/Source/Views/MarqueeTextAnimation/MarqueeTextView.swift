@@ -18,10 +18,15 @@ struct MarqueeTextView: View {
                     Image(.NBC)
                         .resizable()
                         .scaledToFit()
+                        .cornerRadius(10)
                         .frame(width: size.width, height: size.height)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                 }.frame(height: 220)
+                    .cornerRadius(10)
                 MarqueeText(text: "Bright ideas spark growth, unlocking potential and inspiring limitless possibilities.",
-                            font: .systemFont(ofSize: 16))
+                            font: .systemFont(ofSize: 16),
+                            startingDelay: 5)
+                .padding(.horizontal, 15)
                 .foregroundStyle(.white)
             }.padding()
         }

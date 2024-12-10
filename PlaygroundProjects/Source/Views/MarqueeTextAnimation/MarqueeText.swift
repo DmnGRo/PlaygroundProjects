@@ -35,7 +35,7 @@ struct MarqueeText: View {
     
     private var colorMask: [Color] {
         [self.baseColor.opacity(0.3)] +
-        (0...7).map { _ in self.baseColor } +
+        (0...5).map { _ in self.baseColor } +
         [self.baseColor.opacity(0.3)]
     }
     
