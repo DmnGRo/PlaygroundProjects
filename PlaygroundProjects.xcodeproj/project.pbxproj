@@ -29,20 +29,42 @@
 		6E7C8EC22D083A3F009FB88F /* PlaygroundProjectsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlaygroundProjectsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6E7C8EDB2D083E19009FB88F /* Exceptions for "PlaygroundProjects" folder in "PlaygroundProjects" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Tests/PlaygroundProjectsTests/PlaygroundProjectsTests.swift,
+				Tests/PlaygroundProjectsUITests/PlaygroundProjectsUITests.swift,
+				Tests/PlaygroundProjectsUITests/PlaygroundProjectsUITestsLaunchTests.swift,
+			);
+			target = 6E7C8EA72D083A3F009FB88F /* PlaygroundProjects */;
+		};
+		6E7C8EDC2D083E19009FB88F /* Exceptions for "PlaygroundProjects" folder in "PlaygroundProjectsTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Tests/PlaygroundProjectsTests/PlaygroundProjectsTests.swift,
+			);
+			target = 6E7C8EB72D083A3F009FB88F /* PlaygroundProjectsTests */;
+		};
+		6E7C8EE22D083E1B009FB88F /* Exceptions for "PlaygroundProjects" folder in "PlaygroundProjectsUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Tests/PlaygroundProjectsUITests/PlaygroundProjectsUITests.swift,
+				Tests/PlaygroundProjectsUITests/PlaygroundProjectsUITestsLaunchTests.swift,
+			);
+			target = 6E7C8EC12D083A3F009FB88F /* PlaygroundProjectsUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		6E7C8EAA2D083A3F009FB88F /* PlaygroundProjects */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				6E7C8EDB2D083E19009FB88F /* Exceptions for "PlaygroundProjects" folder in "PlaygroundProjects" target */,
+				6E7C8EDC2D083E19009FB88F /* Exceptions for "PlaygroundProjects" folder in "PlaygroundProjectsTests" target */,
+				6E7C8EE22D083E1B009FB88F /* Exceptions for "PlaygroundProjects" folder in "PlaygroundProjectsUITests" target */,
+			);
 			path = PlaygroundProjects;
-			sourceTree = "<group>";
-		};
-		6E7C8EBB2D083A3F009FB88F /* PlaygroundProjectsTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PlaygroundProjectsTests;
-			sourceTree = "<group>";
-		};
-		6E7C8EC52D083A3F009FB88F /* PlaygroundProjectsUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PlaygroundProjectsUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -76,8 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				6E7C8EAA2D083A3F009FB88F /* PlaygroundProjects */,
-				6E7C8EBB2D083A3F009FB88F /* PlaygroundProjectsTests */,
-				6E7C8EC52D083A3F009FB88F /* PlaygroundProjectsUITests */,
 				6E7C8EA92D083A3F009FB88F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -130,9 +150,6 @@
 			dependencies = (
 				6E7C8EBA2D083A3F009FB88F /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				6E7C8EBB2D083A3F009FB88F /* PlaygroundProjectsTests */,
-			);
 			name = PlaygroundProjectsTests;
 			packageProductDependencies = (
 			);
@@ -152,9 +169,6 @@
 			);
 			dependencies = (
 				6E7C8EC42D083A3F009FB88F /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				6E7C8EC52D083A3F009FB88F /* PlaygroundProjectsUITests */,
 			);
 			name = PlaygroundProjectsUITests;
 			packageProductDependencies = (
@@ -395,7 +409,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PlaygroundProjects/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PlaygroundProjects/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 33U8P5AMVL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -424,7 +438,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PlaygroundProjects/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PlaygroundProjects/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 33U8P5AMVL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

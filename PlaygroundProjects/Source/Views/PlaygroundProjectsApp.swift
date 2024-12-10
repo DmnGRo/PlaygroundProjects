@@ -11,7 +11,7 @@ import SwiftUI
 struct PlaygroundProjectsApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView()
         }
     }
 }
