@@ -29,17 +29,31 @@ struct MarqueeText: View {
         self.canAnimate ? 10 : 1
     }
     
+    private var baseColor: Color {
+         .black
+    }
+    
+    private var colorMask: [Color] {
+        [self.baseColor.opacity(0.3)] +
+        (0...7).map { _ in self.baseColor } +
+        [self.baseColor.opacity(0.3)]
+    }
+    
     var body: some View {
         GeometryReader { geometry in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: self.spacing) {
-                    ForEach(0..<self.repeatingTimes, id: \.self) { _ in
+                    ForEach(0..<self.repeatingTimes, id: \.self) { index in
                         Text(self.text)
                             .font(Font(self.font))
+                            .padding(.leading, index == 0 ? 50 : 0)
                     }
                 }
                 .offset(x: self.offset)
             }
+            .mask(LinearGradient(colors: self.colorMask,
+                                 startPoint: .leading,
+                                 endPoint: .trailing))
             .disabled(true)
             .onAppear {
                 self.widthAvailable = geometry.size.width
@@ -51,26 +65,6 @@ struct MarqueeText: View {
                 }
             }
         }.frame(height: self.textSize.height)
-    }
-    
-    private var baseColor: Color {
-        self.colorScheme == .dark ? .black : .white
-    }
-    
-    private var decoration: some View {
-        HStack {
-            LinearGradient(colors: [.clear, .clear.opacity(0.3)],
-                           startPoint: .leading,
-                           endPoint: .trailing)
-            
-            .frame(width: 30)
-            Spacer()
-            LinearGradient(colors: [baseColor.opacity(0.3), baseColor],
-                           startPoint: .leading,
-                           endPoint: .trailing)
-            .blendMode(.multiply)
-            .frame(width: 30)
-        }
     }
     
     func continuousAnimation() {
