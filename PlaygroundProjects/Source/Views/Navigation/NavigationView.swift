@@ -19,7 +19,7 @@ struct NavigationView: View {
                     self.collapsingHeader
                         .tag(selectedTab.rawValue)
                 case .marqueeTextEffect:
-                    Text(selectedTab.title)
+                    self.marqueeTextAnimation
                         .tag(selectedTab.rawValue)
                 }
                 NavigationView.SideMenu(isShowing: self.$showMenu,
@@ -42,6 +42,10 @@ extension NavigationView {
             CollapsingHeaderView(size: proxy.size,
                      safeArea: proxy.safeAreaInsets)
         }
+    }
+    
+    var marqueeTextAnimation: some View {
+        MarqueeTextView()
     }
 }
 
