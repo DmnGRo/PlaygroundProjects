@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  NavigationView.swift
 //  PlaygroundProjects
 //
 //  Created by Damien Rosa on 10/12/2024.
@@ -16,7 +16,7 @@ struct NavigationView: View {
             ZStack {
                 switch selectedTab {
                 case .collapsingHeader:
-                    Text(selectedTab.title)
+                    self.collapsingHeader
                         .tag(selectedTab.rawValue)
                 case .marqueeTextEffect:
                     Text(selectedTab.title)
@@ -32,6 +32,15 @@ struct NavigationView: View {
                 NavigationView.Toolbar(showMenu: self.$showMenu,
                                        placement: .topBarLeading)
             }
+        }
+    }
+}
+
+extension NavigationView {
+    var collapsingHeader: some View {
+        GeometryReader { proxy in
+            CollapsingHeaderView(size: proxy.size,
+                     safeArea: proxy.safeAreaInsets)
         }
     }
 }

@@ -20,6 +20,7 @@ extension NavigationView {
                     self.showMenu.toggle()
                 }) {
                     Image(systemName: "line.3.horizontal")
+                        .foregroundStyle(.secondary)
                 }
             }
         }
