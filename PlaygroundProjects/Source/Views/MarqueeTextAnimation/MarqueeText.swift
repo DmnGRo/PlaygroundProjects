@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct MarqueeText: View {
+struct MarqueeText<Content: View>: View {
     
     @Environment(\.colorScheme) var colorScheme
-    
-    let text: String
-    let font: UIFont
+        
     var startingDelay: CGFloat = 0.0
     var spacing: CGFloat = 40
     var speed: CGFloat = 0.01
+    
+    @ViewBuilder let content: Content
     
     @State private var offset: CGFloat = 0
     @State private var textSize: CGSize = .zero
@@ -44,10 +44,17 @@ struct MarqueeText: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: self.spacing) {
                     ForEach(0..<self.repeatingTimes, id: \.self) { index in
-                        Text(self.text)
-                            .font(Font(self.font))
-                            .padding(.leading, index == 0 ? 50 : 0)
+                        self.content
+                            .background {
+                                GeometryReader { textGeometry in
+                                    Color.clear
+                                        .onAppear(perform: {
+                                            self.textSize = textGeometry.size
+                                        })
+                                }
+                            }
                     }
+                    self.content
                 }
                 .offset(x: self.offset)
             }
@@ -57,7 +64,6 @@ struct MarqueeText: View {
             .disabled(true)
             .onAppear {
                 self.widthAvailable = geometry.size.width
-                self.textSize = self.extractTextSize(self.text)
                 DispatchQueue.main.asyncAfter(deadline: .now() + self.startingDelay) {
                     if self.canAnimate {
                         self.continuousAnimation()
@@ -73,20 +79,16 @@ struct MarqueeText: View {
                 self.offset = -(self.textSize.width * CGFloat(self.repeatingTimes))
             }
     }
-    
-    func extractTextSize(_ text: String) -> CGSize {
-        let attributes = [NSAttributedString.Key.font: font]
-        return (text as NSString).size(withAttributes: attributes)
-    }
 }
 
 #Preview {
     VStack {
-        MarqueeText(text: "Hello, World!",
-                    font: .systemFont(ofSize: 16))
-        MarqueeText(text: "Bright ideas spark growth, unlocking potential and inspiring limitless possibilities.",
-                    font: .systemFont(ofSize: 16),
-                    startingDelay: 5)
+        MarqueeText {
+            Text("Hello, World!")
+        }
+        MarqueeText(startingDelay: 5){
+            Text("Bright ideas spark growth, unlocking potential and inspiring limitless possibilities.")
+        }
     }.padding(25)
         .background(.blue)
 }

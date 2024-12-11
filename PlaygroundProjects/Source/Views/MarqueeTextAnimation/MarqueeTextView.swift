@@ -23,11 +23,16 @@ struct MarqueeTextView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }.frame(height: 220)
                     .cornerRadius(10)
-                MarqueeText(text: "Bright ideas spark growth, unlocking potential and inspiring limitless possibilities.",
-                            font: .systemFont(ofSize: 16),
-                            startingDelay: 5)
+                MarqueeText(startingDelay: 0) {
+                    Text("Bright ideas spark growth, unlocking potential and inspiring limitless possibilities.")
+                }
                 .padding(.horizontal, 15)
                 .foregroundStyle(.white)
+                
+                Text("Bright ideas spark growth, unlocking potential and inspiring limitless possibilities.")
+                    .marquee()
+                Text("CKAY FEAT. AYRA STARR - COME CLOSE")
+                    .marquee()
             }.padding()
         }
     }
