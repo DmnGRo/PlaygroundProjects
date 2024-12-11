@@ -9,52 +9,56 @@ import SwiftUI
 
 struct MarqueeText<Content: View>: View {
     
-    @Environment(\.colorScheme) var colorScheme
-        
     var startingDelay: CGFloat = 0.0
-    var spacing: CGFloat = 40
-    var speed: CGFloat = 0.01
+    var speed: CGFloat = 50
     
-    @ViewBuilder let content: Content
+    @ViewBuilder var content: Content
     
-    @State private var offset: CGFloat = 0
-    @State private var textSize: CGSize = .zero
-    @State private var widthAvailable: CGFloat = 0
+    @State private var contentSize: CGSize = .zero
+    @State private var offset: CGFloat = .zero
+    @State private var widthAvailable: CGFloat = .zero
+    
+    private let spacing: CGFloat = 40
     
     private var canAnimate: Bool {
-        self.textSize.width > self.widthAvailable
-    }
-    
-    private var repeatingTimes: Int {
-        self.canAnimate ? 10 : 1
-    }
-    
-    private var baseColor: Color {
-         .black
+        self.contentSize.width >= self.widthAvailable
     }
     
     private var colorMask: [Color] {
-        [self.baseColor.opacity(0.3)] +
-        (0...5).map { _ in self.baseColor } +
-        [self.baseColor.opacity(0.3)]
+        [.clear] +
+        (0...5).map { _ in .black } +
+        [.clear]
     }
     
     var body: some View {
         GeometryReader { geometry in
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: self.spacing) {
-                    ForEach(0..<self.repeatingTimes, id: \.self) { index in
-                        self.content
-                            .background {
-                                GeometryReader { textGeometry in
-                                    Color.clear
-                                        .onAppear(perform: {
-                                            self.textSize = textGeometry.size
-                                        })
-                                }
+                HStack(alignment: .center, spacing: self.spacing) {
+                    content
+                        .background {
+                            GeometryReader { contentGeometry in
+                                Color.clear
+                                    .onAppear {
+                                        DispatchQueue.main.async {
+                                            self.contentSize = contentGeometry.size
+                                            self.widthAvailable = geometry.size.width
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + self.startingDelay) {
+                                                self.continuousAnimation()
+                                            }
+                                        }
+                                    }
+                                    .onChange(of: self.contentSize) { newSize in
+                                        self.contentSize = newSize
+                                        self.continuousAnimation()
+                                    }
                             }
+                        }
+                    
+                    if self.canAnimate {
+                        ForEach((1...10), id: \.self) { _ in
+                            content
+                        }
                     }
-                    self.content
                 }
                 .offset(x: self.offset)
             }
@@ -62,21 +66,17 @@ struct MarqueeText<Content: View>: View {
                                  startPoint: .leading,
                                  endPoint: .trailing))
             .disabled(true)
-            .onAppear {
-                self.widthAvailable = geometry.size.width
-                DispatchQueue.main.asyncAfter(deadline: .now() + self.startingDelay) {
-                    if self.canAnimate {
-                        self.continuousAnimation()
-                    }
-                }
-            }
-        }.frame(height: self.textSize.height)
+        }
+        .frame(height: self.contentSize.height)
+        .clipped()
     }
     
     func continuousAnimation() {
-        withAnimation(.linear(duration: self.speed * (self.textSize.width + self.spacing) * CGFloat(self.repeatingTimes))
+        guard self.canAnimate else { return }
+        let totalDistance = self.contentSize.width + self.spacing
+        withAnimation(.linear(duration: (totalDistance / self.speed))
             .repeatForever(autoreverses: false)) {
-                self.offset = -(self.textSize.width * CGFloat(self.repeatingTimes))
+                self.offset = -totalDistance
             }
     }
 }
