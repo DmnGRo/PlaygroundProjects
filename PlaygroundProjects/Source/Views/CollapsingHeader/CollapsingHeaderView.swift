@@ -50,13 +50,12 @@ struct CollapsingHeaderView: View {
                     })
                 }
             }
-            .ignoresSafeArea()
         }
     }
     
     // HEADER
     @ViewBuilder
-    func headerView() -> some View {
+    private func headerView() -> some View {
         GeometryReader { proxy in
             ZStack {
                 Rectangle()
@@ -91,7 +90,7 @@ struct CollapsingHeaderView: View {
     }
     
     private func resizedOffsetY(of rect: CGRect) -> CGFloat {
-        let size = rect.minY - self.layout.bottomPadding * 2
+        let size = rect.minY - self.layout.bottomPadding * 2 - 45
         return -size * self.progress
     }
     

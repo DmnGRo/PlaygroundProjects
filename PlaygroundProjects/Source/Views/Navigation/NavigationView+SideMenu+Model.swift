@@ -9,7 +9,9 @@ import Foundation
 
 enum SideMenuOption: Int, CaseIterable {
     case collapsingHeader
+    case collapsingHeaderOtherApproach
     case marqueeTextEffect
+    case randomPlayground
     
     var title: String {
         switch self {
@@ -17,6 +19,10 @@ enum SideMenuOption: Int, CaseIterable {
             return "Collapsing Header"
         case .marqueeTextEffect:
             return "Marquee Text Effect"
+        case .collapsingHeaderOtherApproach:
+            return "Collapsing Header Other Approach"
+        case .randomPlayground:
+            return "Random Playground"
         }
     }
     
@@ -26,6 +32,10 @@ enum SideMenuOption: Int, CaseIterable {
             return "widget.medium"
         case .marqueeTextEffect:
             return "text.word.spacing"
+        case .collapsingHeaderOtherApproach:
+            return "widget.medium"
+        case .randomPlayground:
+            return "pencil.circle"
         }
     }
 }

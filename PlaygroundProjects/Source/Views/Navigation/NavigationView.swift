@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NavigationView: View {
     @State private var showMenu: Bool = false
-    @State private var selectedTab: SideMenuOption = .marqueeTextEffect
+    @State private var selectedTab: SideMenuOption = .collapsingHeaderOtherApproach
     
     var body: some View {
         NavigationStack {
@@ -21,13 +21,17 @@ struct NavigationView: View {
                 case .marqueeTextEffect:
                     self.marqueeTextAnimation
                         .tag(selectedTab.rawValue)
+                case .collapsingHeaderOtherApproach:
+                    self.collapsingHeaderV2
+                        .tag(selectedTab.rawValue)
+                case .randomPlayground:
+                    self.randomPlayground
+                        .tag(selectedTab.rawValue)
                 }
                 NavigationView.SideMenu(isShowing: self.$showMenu,
                                         selectedOption: self.$selectedTab)
             }
             .toolbarVisibility(self.showMenu ? .hidden : .visible, for: .navigationBar)
-            .navigationTitle("SwiftUI Playground")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 NavigationView.Toolbar(showMenu: self.$showMenu,
                                        placement: .topBarLeading)
@@ -46,6 +50,14 @@ extension NavigationView {
     
     var marqueeTextAnimation: some View {
         MarqueeTextView()
+    }
+    
+    var collapsingHeaderV2: some View {
+        CollapsingHeaderViewV2()
+    }
+    
+    var randomPlayground: some View {
+        RandomPlaygroundView()
     }
 }
 

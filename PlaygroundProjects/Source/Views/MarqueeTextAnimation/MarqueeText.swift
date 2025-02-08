@@ -7,88 +7,107 @@
 
 import SwiftUI
 
-struct MarqueeText<Content: View>: View {
+struct MarqueeText: View {
     
-    var startingDelay: CGFloat = 0.0
-    var speed: CGFloat = 50
-    
-    @ViewBuilder var content: Content
+    var text: String
+    var font: Font
+    var spacing: CGFloat = 40
     
     @State private var contentSize: CGSize = .zero
-    @State private var offset: CGFloat = .zero
-    @State private var widthAvailable: CGFloat = .zero
+    @State private var animate: Bool = false
     
-    private let spacing: CGFloat = 40
-    
-    private var canAnimate: Bool {
-        self.contentSize.width >= self.widthAvailable
+    private var fullContentWidth: CGFloat {
+        return -(self.contentSize.width)
     }
     
-    private var colorMask: [Color] {
-        [.clear] +
-        (0...5).map { _ in .black } +
-        [.clear]
+    private var animation: Animation {
+        print("[App-debug] animation with contentSize: \(self.contentSize.width)")
+        return Animation
+            .linear(duration: Double(self.contentSize.width) * 0.02)
+            .repeatForever(autoreverses: false)
+    }
+    
+    private var defaultAnimation: Animation {
+        Animation
+            .linear(duration: 0)
     }
     
     var body: some View {
-        GeometryReader { geometry in
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .center, spacing: self.spacing) {
-                    content
-                        .background {
-                            GeometryReader { contentGeometry in
-                                Color.clear
+        self.content
+            .hidden()
+            .overlay {
+                GeometryReader { containerProxy in
+                    self.content
+                        .fixedSize(horizontal: true, vertical: false)
+                        .hidden()
+                        .overlay {
+                            GeometryReader { contentProxy in
+                                let contentSize = contentProxy.size
+                                HStack(spacing: self.spacing) {
+                                    self.content
+                                    self.content
+                                }.frame(width: contentSize.width * 2 + self.spacing)
+                                    .offset(x: self.animate ? -(contentSize.width + self.spacing) : 0)
+                                    .animation(
+                                        self.animate ? self.animation : self.defaultAnimation,
+                                        value: self.animate
+                                    )
                                     .onAppear {
-                                        DispatchQueue.main.async {
-                                            self.contentSize = contentGeometry.size
-                                            self.widthAvailable = geometry.size.width
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + self.startingDelay) {
-                                                self.continuousAnimation()
-                                            }
-                                        }
+                                        print("[App-debug] onAppear")
+//                                        self.contentSize = contentSize
+//                                        self.animate = containerProxy.size.width < contentSize.width
+                                        self.animate = true
                                     }
-                                    .onChange(of: self.contentSize) { newSize in
+                                    .onChange(of: contentProxy.size) { newSize in
+                                            print("[App-debug] onChange: \(newSize)")
+                                        
+                                        self.animate = containerProxy.size.width < newSize.width
                                         self.contentSize = newSize
-                                        self.continuousAnimation()
+                                    }
+                                    .onDisappear {
+                                        print("[App-debug] onDisappear")
                                     }
                             }
                         }
-                    
-                    if self.canAnimate {
-                        ForEach((1...10), id: \.self) { _ in
-                            content
-                        }
-                    }
                 }
-                .offset(x: self.offset)
             }
-            .mask(LinearGradient(colors: self.colorMask,
-                                 startPoint: .leading,
-                                 endPoint: .trailing))
-            .disabled(true)
-        }
-        .frame(height: self.contentSize.height)
-        .clipped()
+            .clipped()
     }
     
-    func continuousAnimation() {
-        guard self.canAnimate else { return }
-        let totalDistance = self.contentSize.width + self.spacing
-        withAnimation(.linear(duration: (totalDistance / self.speed))
-            .repeatForever(autoreverses: false)) {
-                self.offset = -totalDistance
-            }
+    private func startAnimation(_ contentWidth: CGFloat) -> Animation {
+        
+            print("[App-debug] animation with contentSize: \(self.contentSize.width)")
+        return Animation
+            .linear(duration: Double(contentWidth) / 30)
+            .repeatForever(autoreverses: false)
+    }
+    
+    private var content: Text {
+        Text(self.text)
+            .font(self.font)
     }
 }
 
 #Preview {
+    
+    @Previewable @State var text: String = "Another text This is a brand new message that forces an animation reset."
+    @Previewable @State var currentText: String = "Bright ideas spark growth, unlocking potential and inspiring limitless possibilities."
+    
     VStack {
-        MarqueeText {
-            Text("Hello, World!")
+        Button(action: {
+            currentText = text
+        }) {
+            Text("Update")
+                .padding()
+                .background(.red)
+                .cornerRadius(10)
         }
-        MarqueeText(startingDelay: 5){
-            Text("Bright ideas spark growth, unlocking potential and inspiring limitless possibilities.")
-        }
+        MarqueeText(text: "Hello, World!",
+                    font: .largeTitle)
+        .foregroundStyle(.white)
+        MarqueeText(text: currentText,
+                    font: .callout)
+        .foregroundStyle(.white)
     }.padding(25)
         .background(.blue)
 }
