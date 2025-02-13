@@ -20,7 +20,7 @@ struct ObserverScrollView<T: View>: View {
     private let targetOffsetSubject: PassthroughSubject<ScrollEndTarget<String>, Never>
     private let debouncerTargetOffsetSubject: AnyPublisher<ScrollEndTarget<String>, Never>
     
-    init(content: T, onOffsetChanged: @escaping (CGFloat) -> Void, onDragEnded: @escaping () -> Void) {
+    init(onOffsetChanged: @escaping (CGFloat) -> Void, onDragEnded: @escaping () -> Void = {}, content: T) {
         self.content = content
         self.onOffsetChanged = onOffsetChanged
         self.onDragEnded = onDragEnded
@@ -41,14 +41,12 @@ struct ObserverScrollView<T: View>: View {
                     }
                 }
                 .onReceive(self.debouncerTargetOffsetSubject) { scrollEndTarget in
-                    print("onReceive debouncer: \(scrollEndTarget)")
                     self.onDragEnded()
                 }
         }
         .coordinateSpace(name: self.coordinateNamespace)
         .onPreferenceChange(ObserverScrollViewPreferenceKey.self, perform: self.onOffsetChanged)
         .simultaneousGesture(DragGesture().onEnded { value in
-            print("simultaneousGesture debouncer: \(value.predictedEndLocation.y)")
             let scrollEndTarget = ScrollEndTarget(id: self.mainViewId, offset: value.location.y)
             self.targetOffsetSubject.send(scrollEndTarget)
             self.onDragEnded()

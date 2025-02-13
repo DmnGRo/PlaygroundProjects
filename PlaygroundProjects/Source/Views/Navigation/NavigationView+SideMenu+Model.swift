@@ -13,6 +13,7 @@ enum SideMenuOption: Int, CaseIterable {
     case marqueeTextEffect
     case randomPlayground
     case flowRowLayout
+    case stickyHeader
     
     var title: String {
         switch self {
@@ -26,6 +27,8 @@ enum SideMenuOption: Int, CaseIterable {
             return "Random Playground"
         case .flowRowLayout:
             return "Flow Row Layout"
+        case .stickyHeader:
+            return "Sticky Header"
         }
     }
     
@@ -41,6 +44,8 @@ enum SideMenuOption: Int, CaseIterable {
             return "pencil.circle"
         case .flowRowLayout:
             return "text.word.spacing"
+        case .stickyHeader:
+            return "tray.2"
         }
     }
 }

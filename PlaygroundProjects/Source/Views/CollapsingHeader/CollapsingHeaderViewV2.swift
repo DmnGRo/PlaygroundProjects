@@ -24,9 +24,9 @@ struct CollapsingHeaderViewV2: View {
                 .ignoresSafeArea()
                 
                 ScrollViewReader { reader in
-                    ObserverScrollView(content: self.layoutCards(proxy: proxy),
-                                       onOffsetChanged: { offset in self.verticalOffset = offset },
-                                       onDragEnded: { self.onDragEnded(reader) })
+                    ObserverScrollView(onOffsetChanged: { offset in self.verticalOffset = offset },
+                                       onDragEnded: { self.onDragEnded(reader) },
+                                       content: self.layoutCards(proxy: proxy))
                 }
                 
                 LinearGradient(gradient: Gradient(colors: [Color.blue, Color.red]),

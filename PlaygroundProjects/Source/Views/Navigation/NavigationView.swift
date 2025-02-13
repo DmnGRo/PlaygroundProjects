@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NavigationView: View {
     @State private var showMenu: Bool = false
-    @State private var selectedTab: SideMenuOption = .flowRowLayout
+    @State private var selectedTab: SideMenuOption = .stickyHeader
     
     var body: some View {
         NavigationStack {
@@ -29,6 +29,9 @@ struct NavigationView: View {
                         .tag(selectedTab.rawValue)
                 case .flowRowLayout:
                     self.flowRowLayout
+                        .tag(selectedTab.rawValue)
+                case .stickyHeader:
+                    self.stickyHeaderView
                         .tag(selectedTab.rawValue)
                 }
                 NavigationView.SideMenu(isShowing: self.$showMenu,
@@ -65,6 +68,10 @@ extension NavigationView {
     
     var flowRowLayout: some View {
         FlowRowLayoutView()
+    }
+    
+    var stickyHeaderView: some View {
+        StickyHeaderView()
     }
 }
 
