@@ -12,6 +12,7 @@ enum SideMenuOption: Int, CaseIterable {
     case collapsingHeaderOtherApproach
     case marqueeTextEffect
     case randomPlayground
+    case flowRowLayout
     
     var title: String {
         switch self {
@@ -23,6 +24,8 @@ enum SideMenuOption: Int, CaseIterable {
             return "Collapsing Header Other Approach"
         case .randomPlayground:
             return "Random Playground"
+        case .flowRowLayout:
+            return "Flow Row Layout"
         }
     }
     
@@ -36,6 +39,8 @@ enum SideMenuOption: Int, CaseIterable {
             return "widget.medium"
         case .randomPlayground:
             return "pencil.circle"
+        case .flowRowLayout:
+            return "text.word.spacing"
         }
     }
 }

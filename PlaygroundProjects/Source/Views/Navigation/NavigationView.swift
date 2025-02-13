@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NavigationView: View {
     @State private var showMenu: Bool = false
-    @State private var selectedTab: SideMenuOption = .collapsingHeaderOtherApproach
+    @State private var selectedTab: SideMenuOption = .flowRowLayout
     
     var body: some View {
         NavigationStack {
@@ -26,6 +26,9 @@ struct NavigationView: View {
                         .tag(selectedTab.rawValue)
                 case .randomPlayground:
                     self.randomPlayground
+                        .tag(selectedTab.rawValue)
+                case .flowRowLayout:
+                    self.flowRowLayout
                         .tag(selectedTab.rawValue)
                 }
                 NavigationView.SideMenu(isShowing: self.$showMenu,
@@ -58,6 +61,10 @@ extension NavigationView {
     
     var randomPlayground: some View {
         RandomPlaygroundView()
+    }
+    
+    var flowRowLayout: some View {
+        FlowRowLayoutView()
     }
 }
 
