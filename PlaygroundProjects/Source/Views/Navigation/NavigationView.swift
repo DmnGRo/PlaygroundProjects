@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct NavigationView: View {
+    
+    @StateObject var viewModel: NavigationViewViewModel
+    
     @State private var showMenu: Bool = false
-    @State private var selectedTab: SideMenuOption = .stickyHeader
+    @State private var selectedTab: SideMenuOption = SideMenuOption.allCases.first!
     
     var body: some View {
         NavigationStack {
@@ -35,18 +38,28 @@ struct NavigationView: View {
                         .tag(selectedTab.rawValue)
                 }
                 NavigationView.SideMenu(isShowing: self.$showMenu,
-                                        selectedOption: self.$selectedTab)
+                                        selectedOption: self.$selectedTab,
+                                        email: self.viewModel.email,
+                                        username: self.viewModel.username,
+                                        version: self.viewModel.buildVersion)
             }
             .toolbarVisibility(self.showMenu ? .hidden : .visible, for: .navigationBar)
             .toolbar {
                 NavigationView.Toolbar(showMenu: self.$showMenu,
                                        placement: .topBarLeading)
             }
+            .onAppear {
+                self.viewModel.load()
+            }
         }
     }
 }
 
 extension NavigationView {
+    var underConstructionsView: some View {
+        UnderConstructionView()
+    }
+    
     var collapsingHeader: some View {
         GeometryReader { proxy in
             CollapsingHeaderView(size: proxy.size,
@@ -59,7 +72,13 @@ extension NavigationView {
     }
     
     var collapsingHeaderV2: some View {
-        CollapsingHeaderViewV2()
+        Group {
+            if Properties.shared.collapsingHeaderAlternative {
+                CollapsingHeaderViewV2()
+            } else {
+                self.underConstructionsView
+            }
+        }
     }
     
     var randomPlayground: some View {
@@ -76,5 +95,5 @@ extension NavigationView {
 }
 
 #Preview {
-    NavigationView()
+    NavigationView(viewModel: .init(appSettingsRepository: DefaultAppSetttingsRepository()))
 }

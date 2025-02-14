@@ -13,6 +13,10 @@ extension NavigationView {
         @Binding var isShowing: Bool
         @Binding var selectedOption: SideMenuOption
         
+        let email: String
+        let username: String
+        let version: String
+        
         var body: some View {
             ZStack {
                 if self.isShowing {
@@ -23,7 +27,8 @@ extension NavigationView {
                     
                     HStack {
                         VStack(alignment: .leading, spacing: 32) {
-                            NavigationView.SideMenu.Header()
+                            NavigationView.SideMenu.Header(email: self.email,
+                                                           username: self.username)
                             
                             Section {
                                 VStack {
@@ -39,6 +44,15 @@ extension NavigationView {
                             .background(RoundedRectangle(cornerRadius: 10).fill(.gray.opacity(0.1)))
                             
                             Spacer()
+                            
+                            Section {
+                                NavigationView.SideMenu.InfoSection(
+                                    version: self.version)
+                            }
+                            .padding(16)
+                            .frame(width: 240)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .background(RoundedRectangle(cornerRadius: 10).fill(.gray.opacity(0.1)))
                         }
                         .padding()
                         .frame(width: 270, alignment: .leading)
@@ -60,5 +74,8 @@ extension NavigationView {
 
 #Preview {
     NavigationView.SideMenu(isShowing: .constant(true),
-                            selectedOption: .constant(.collapsingHeader))
+                            selectedOption: .constant(.collapsingHeader),
+                            email: "example@example.com",
+                            username: "example",
+                            version: "1.0.0")
 }

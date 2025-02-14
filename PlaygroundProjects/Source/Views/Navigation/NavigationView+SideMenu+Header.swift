@@ -10,6 +10,9 @@ import SwiftUI
 extension NavigationView.SideMenu {
     struct Header: View {
         
+        let email: String
+        let username: String
+
         private let layout: Layout = .init()
         
         var body: some View {
@@ -23,10 +26,10 @@ extension NavigationView.SideMenu {
                     .padding(.vertical)
                 
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Damien Rosa")
+                    Text(self.username)
                         .font(.subheadline)
                     
-                    Text("dmngro.company@gmail.com")
+                    Text(self.email)
                         .font(.footnote)
                         .tint(.gray)
                 }
@@ -42,5 +45,7 @@ extension NavigationView.SideMenu.Header {
 }
 
 #Preview {
-    NavigationView.SideMenu.Header()
+    NavigationView.SideMenu.Header(
+        email: "some@email.com", username: "Some username"
+    )
 }

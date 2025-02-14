@@ -9,10 +9,12 @@ import SwiftUI
 
 @main
 struct PlaygroundProjectsApp: App {
+    
+    private let appSettingsRepository: AppSettingsRepository = DefaultAppSetttingsRepository()
+    
     var body: some Scene {
         WindowGroup {
-            NavigationView()
+            NavigationView(viewModel: NavigationViewViewModel(appSettingsRepository: self.appSettingsRepository))
         }
     }
 }
-
