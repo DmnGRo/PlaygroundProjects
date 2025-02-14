@@ -14,23 +14,23 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSTitleValueSpecifier</string>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Email</string>
+			<key>DefaultValue</key>
+			<string>dmngro.company@gmail.com</string>
+			<key>Key</key>
+			<string>com.dgr.playground.email</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>DefaultValue</key>
+			<string>Damien Rosa</string>
 			<key>Title</key>
 			<string>Username</string>
 			<key>Key</key>
 			<string>com.dgr.playground.username</string>
-			<key>DefaultValue</key>
-			<string>Damien Rosa</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSTitleValueSpecifier</string>
-			<key>Title</key>
-			<string>Email</string>
-			<key>Key</key>
-			<string>com.dgr.playground.email</string>
-			<key>DefaultValue</key>
-			<string>dmngro.company@gmail.com</string>
 		</dict>
 		<dict>
 			<key>Type</key>

@@ -15,7 +15,7 @@ extension NavigationView.SideMenu {
             VStack {
                 Text("App Version: \(self.version)")
                     .font(.footnote)
-                    .tint(.secondary)
+                    .foregroundStyle(.primaryBlue)
             }
         }
     }

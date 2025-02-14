@@ -8,7 +8,6 @@
 import Foundation
 
 final class DefaultAppSetttingsRepository: AppSettingsRepository {
-    
     func setUpApp() {
         Properties.shared.synchronize()
         Properties.shared.buildVersion = Bundle.main.buildVersion
@@ -18,5 +17,10 @@ final class DefaultAppSetttingsRepository: AppSettingsRepository {
         return BasicUserDefaults(buildVersing: Properties.shared.buildVersion,
                                  email: Properties.shared.userEmail,
                                  username: Properties.shared.username)
+    }
+    
+    func clearBasicDefaults() {
+        Properties.shared.userEmail = ""
+        Properties.shared.username = ""
     }
 }

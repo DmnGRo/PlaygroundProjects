@@ -41,7 +41,8 @@ struct NavigationView: View {
                                         selectedOption: self.$selectedTab,
                                         email: self.viewModel.email,
                                         username: self.viewModel.username,
-                                        version: self.viewModel.buildVersion)
+                                        version: self.viewModel.buildVersion,
+                                        onClearSetup: { self.viewModel.clearSetup() })
             }
             .toolbarVisibility(self.showMenu ? .hidden : .visible, for: .navigationBar)
             .toolbar {
@@ -92,8 +93,4 @@ extension NavigationView {
     var stickyHeaderView: some View {
         StickyHeaderView()
     }
-}
-
-#Preview {
-    NavigationView(viewModel: .init(appSettingsRepository: DefaultAppSetttingsRepository()))
 }

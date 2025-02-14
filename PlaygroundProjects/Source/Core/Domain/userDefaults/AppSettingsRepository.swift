@@ -8,4 +8,5 @@
 protocol AppSettingsRepository {
     func setUpApp()
     func basicUserDefaults() -> BasicUserDefaults
+    func clearBasicDefaults()
 }

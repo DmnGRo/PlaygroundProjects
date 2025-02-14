@@ -9,12 +9,33 @@ import SwiftUI
 
 @main
 struct PlaygroundProjectsApp: App {
+    @StateObject private var viewModel: StartUpViewModel = .init()
     
-    private let appSettingsRepository: AppSettingsRepository = DefaultAppSetttingsRepository()
+    @State private var isCompleted: Bool = false
+    @State private var isLoading: Bool = true
     
     var body: some Scene {
         WindowGroup {
-            NavigationView(viewModel: NavigationViewViewModel(appSettingsRepository: self.appSettingsRepository))
+            ZStack{
+                if !self.isLoading {
+                    if self.isCompleted {
+                        NavigationView(viewModel: .init(appSettingsRepository: DefaultAppSetttingsRepository()))
+                    } else {
+                        SetupAppView()
+                    }
+                } else {
+                    SplashScreenView()
+                        .onAppear {
+                            self.viewModel.load()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
+                                withAnimation(.easeInOut(duration: 1)) {
+                                    self.isCompleted = self.viewModel.isCompleted
+                                    self.isLoading = false
+                                }
+                            }
+                        }
+                }
+            }
         }
     }
 }

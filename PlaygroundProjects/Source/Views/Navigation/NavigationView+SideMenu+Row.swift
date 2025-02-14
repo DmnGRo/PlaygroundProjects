@@ -29,7 +29,7 @@ extension NavigationView.SideMenu {
                 Spacer()
             }
             .padding(.leading)
-            .foregroundStyle(isSelected ? .blue : .secondary)
+            .foregroundStyle(isSelected ? .blue : .gray)
             .frame(height: 44)
             .background(isSelected ? .blue.opacity(0.2) : Color.clear)
             .clipped()

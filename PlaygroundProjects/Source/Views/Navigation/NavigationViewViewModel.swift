@@ -23,6 +23,10 @@ final class NavigationViewViewModel: ObservableObject {
         self.appSettingsRepository.setUpApp()
         self.basicDefaults = self.appSettingsRepository.basicUserDefaults()
     }
+    
+    func clearSetup() {
+        self.appSettingsRepository.clearBasicDefaults()
+    }
 }
 
 extension NavigationViewViewModel {

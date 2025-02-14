@@ -16,6 +16,7 @@ extension NavigationView {
         let email: String
         let username: String
         let version: String
+        var onClearSetup: (() -> Void) = {}
         
         var body: some View {
             ZStack {
@@ -45,9 +46,17 @@ extension NavigationView {
                             
                             Spacer()
                             
+                            Button(action: { self.onClearSetup() }) {
+                                Text("Clear Setup")
+                                    .foregroundStyle(.accent)
+                            }
+                            .frame(width: 240, height: 44)
+                            .buttonStyle(.plain)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .background(RoundedRectangle(cornerRadius: 10).fill(.primaryBlue))
+                            
                             Section {
-                                NavigationView.SideMenu.InfoSection(
-                                    version: self.version)
+                                NavigationView.SideMenu.InfoSection(version: self.version)
                             }
                             .padding(16)
                             .frame(width: 240)

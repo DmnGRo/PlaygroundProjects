@@ -28,10 +28,11 @@ extension NavigationView.SideMenu {
                 VStack(alignment: .leading, spacing: 6) {
                     Text(self.username)
                         .font(.subheadline)
+                        .foregroundStyle(.primaryBlue)
                     
                     Text(self.email)
                         .font(.footnote)
-                        .tint(.gray)
+                        .foregroundStyle(.primaryBlue.opacity(0.7))
                 }
             }
         }
