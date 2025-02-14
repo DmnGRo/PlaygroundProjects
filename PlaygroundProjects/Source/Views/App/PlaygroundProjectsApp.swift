@@ -16,7 +16,7 @@ struct PlaygroundProjectsApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ZStack{
+            ZStack {
                 if !self.isLoading {
                     if self.isCompleted {
                         NavigationView(viewModel: .init(appSettingsRepository: DefaultAppSetttingsRepository()))
